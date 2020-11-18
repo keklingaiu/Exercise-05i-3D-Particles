@@ -18,4 +18,8 @@ func _physics_process(_delta):
 
 
 func die():
+	
+	explosion.position = position
+	get_node("/root/Game/Explosions").add_child(explosion)
+	explosion.get_node("AnimatedSprite3D").play()
 	queue_free()

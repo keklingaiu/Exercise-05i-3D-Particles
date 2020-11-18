@@ -7,6 +7,8 @@ var max_speed = 8
 var mouse_sensitivity = 0.002
 var mouse_range = 1.2
 
+
+
 var velocity = Vector3()
 
 func _ready():
