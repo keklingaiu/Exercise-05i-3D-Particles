@@ -25,8 +25,8 @@ Global="*res://Global.gd"
 
 [display]
 
-window/size/fullscreen=true
 window/size/always_on_top=true
+window/dpi/allow_hidpi=true
 
 [input]
 

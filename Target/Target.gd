@@ -3,6 +3,7 @@ extends StaticBody
 var speed = 0
 var y_range = 0
 
+
 func _ready():
 	randomize()
 	speed = (randf() * 0.05) + 0.001
@@ -19,7 +20,4 @@ func _physics_process(_delta):
 
 func die():
 	
-	explosion.position = position
-	get_node("/root/Game/Explosions").add_child(explosion)
-	explosion.get_node("AnimatedSprite3D").play()
 	queue_free()

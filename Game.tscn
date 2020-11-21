@@ -1,11 +1,9 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Assets/empty_warehouse.hdr" type="Texture" id=1]
 [ext_resource path="res://Target/Target.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Blaster.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Player/Player.gd" type="Script" id=4]
-[ext_resource path="res://Assets/explosion.jpg" type="Texture" id=5]
-[ext_resource path="res://Explosions.gd" type="Script" id=6]
 
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 1 )
@@ -39,100 +37,21 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="AtlasTexture" id=9]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 64, 64 )
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.501961, 1, 0, 1 )
+emission_enabled = true
+emission = Color( 0.431373, 1, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
 
-[sub_resource type="AtlasTexture" id=10]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 64, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=11]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 128, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=12]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 192, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=13]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 0, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=14]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 64, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=15]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 128, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=16]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 192, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=17]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 0, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=18]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 64, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=19]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 128, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=20]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 192, 128, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=21]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 0, 192, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=22]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 64, 192, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=23]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 128, 192, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=24]
-flags = 7
-atlas = ExtResource( 5 )
-region = Rect2( 192, 192, 64, 64 )
-
-[sub_resource type="SpriteFrames" id=25]
-animations = [ {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
-"loop": true,
-"name": "default",
-"speed": 10.0
-} ]
-
-[sub_resource type="SpatialMaterial" id=26]
-albedo_color = Color( 0.878431, 0.745098, 0.129412, 1 )
-
-[sub_resource type="SphereMesh" id=27]
-material = SubResource( 26 )
+[sub_resource type="SphereMesh" id=10]
+material = SubResource( 9 )
 radius = 0.05
+height = 0.1
+
+[sub_resource type="Curve" id=11]
+_data = [ Vector2( 0, 0.981982 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [node name="Game" type="Spatial"]
 
@@ -151,7 +70,6 @@ transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="Player" type="KinematicBody" parent="."]
-visible = false
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
@@ -174,8 +92,25 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.963271, 1.26608, 1.29986 )
 
 [node name="Laser" type="MeshInstance" parent="Player/Pivot"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0.958417, 1.51267, 0 )
+visible = false
 mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
+
+[node name="Flash" type="CPUParticles" parent="Player/Pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.96574, 1.49351, 2.45757 )
+emitting = false
+amount = 50
+lifetime = 0.3
+one_shot = true
+mesh = SubResource( 10 )
+direction = Vector3( 0, 0, 1 )
+spread = 30.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 3.0
+initial_velocity_random = 0.5
+linear_accel = 2.0
+tangential_accel = 5.0
+scale_amount_curve = SubResource( 11 )
 
 [node name="Targets" type="Spatial" parent="."]
 
@@ -195,13 +130,3 @@ transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 0, 0, -
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 25, 0, 0 )
 
 [node name="Explosions" type="Spatial" parent="."]
-script = ExtResource( 6 )
-
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Explosions"]
-billboard = 1
-frames = SubResource( 25 )
-frame = 1
-
-[node name="CPUParticles" type="CPUParticles" parent="Explosions"]
-amount = 10
-mesh = SubResource( 27 )
